@@ -2,6 +2,7 @@ package kata.bank.services;
 
 
 import kata.bank.domains.Account;
+import kata.bank.exceptions.AccountNotFoundException;
 import kata.bank.repositories.AccountRepository;
 import kata.bank.repositories.AccountRepositoryImpl;
 import kata.bank.repositories.StatementRepositoryImpl;
@@ -26,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findAccountById(Long id) {
-        return null;
+        return accountRepository.getById(id).orElseThrow(() -> new AccountNotFoundException(id));
     }
 
     @Override

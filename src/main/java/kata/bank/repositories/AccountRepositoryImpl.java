@@ -22,6 +22,6 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public Optional<Account> getById(Long id) {
-        return null;
+        return Optional.ofNullable(accounts.get(id));
     }
 }
