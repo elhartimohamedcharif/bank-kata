@@ -21,6 +21,8 @@ public class AccountServiceTest {
     private TransactionRepository transactionRepository;
     private Long accountId = 1L;
     private double depositAmount = 1500;
+    private double amountWithdrawn = 1000;
+
 
 
 
@@ -73,6 +75,29 @@ public class AccountServiceTest {
                 transaction::isPresent,
                 () -> assertEquals(TransactionType.DEPOSIT, transaction.get().getType()),
                 () -> assertEquals(depositAmount, transaction.get().getAmount())
+        );
+    }
+
+    @DisplayName("Should make a withdraw")
+    @Test
+    @Order(5)
+    void makeWithdrawTest() {
+        accountService.withdraw(accountId, amountWithdrawn);
+        Account account = accountService.findAccountById(accountId);
+        double balanceAfterMakingWithDraw = 500;
+        assertEquals(balanceAfterMakingWithDraw, account.getBalance());
+    }
+
+    @DisplayName("Should create a deposit transaction")
+    @Test
+    @Order(6)
+    void createWithDrawTransactionTest() {
+        Optional<Transaction> transaction = transactionRepository.getAllAccountTransactions(accountId)
+                .stream().filter(t -> t.getType() == TransactionType.WITHDRAWAL).findAny();
+        assertAll(
+                transaction::isPresent,
+                () -> assertEquals(TransactionType.WITHDRAWAL, transaction.get().getType()),
+                () -> assertEquals(amountWithdrawn, transaction.get().getAmount())
         );
     }
 
