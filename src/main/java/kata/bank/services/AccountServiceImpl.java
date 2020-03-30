@@ -6,6 +6,7 @@ import kata.bank.domains.StatementLine;
 import kata.bank.domains.Transaction;
 import kata.bank.enums.TransactionType;
 import kata.bank.exceptions.AccountNotFoundException;
+import kata.bank.exceptions.BalanceNotSufficientException;
 import kata.bank.exceptions.NegativeAmountException;
 import kata.bank.repositories.*;
 
@@ -62,7 +63,28 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void withdraw(Long accountId, double amount) {
+        if (amount < 0) throw new NegativeAmountException();
+        Account account = accountRepository.getById(accountId).orElseThrow(() -> new AccountNotFoundException(accountId));
+        double currentBalance = account.getBalance() - amount;
+        // the balance is not sufficient
+        if (amount > account.getBalance()) {
+            throw new BalanceNotSufficientException();
+        }
+        account.setBalance(currentBalance);
+        Transaction transaction = Transaction
+                .builder().transactionTime(LocalDateTime.now())
+                .amount(amount)
+                .type(TransactionType.WITHDRAWAL)
+                .build();
 
+        StatementLine statementLine = StatementLine.builder()
+                .currentBalance(currentBalance)
+                .transaction(transaction)
+                .build();
+
+        statementRepository.addAccountStatement(statementLine, accountId);
+        transactionRepository.saveTransaction(transaction, accountId);
+        accountRepository.updateAccount(account);
     }
 
     @Override

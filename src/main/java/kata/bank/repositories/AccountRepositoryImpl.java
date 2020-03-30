@@ -18,6 +18,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public void updateAccount(Account account) {
+        accounts.put(account.getId(), account);
     }
 
     @Override
