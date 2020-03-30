@@ -4,6 +4,7 @@ package kata.bank.services;
 import kata.bank.domains.Account;
 import kata.bank.domains.Transaction;
 import kata.bank.enums.TransactionType;
+import kata.bank.exceptions.AccountNotFoundException;
 import kata.bank.repositories.TransactionRepository;
 import kata.bank.repositories.TransactionRepositoryImpl;
 import org.junit.jupiter.api.*;
@@ -22,6 +23,7 @@ public class AccountServiceTest {
     private Long accountId = 1L;
     private double depositAmount = 1500;
     private double amountWithdrawn = 1000;
+    private Long notExistedId = 2L;
 
 
 
@@ -99,6 +101,14 @@ public class AccountServiceTest {
                 () -> assertEquals(TransactionType.WITHDRAWAL, transaction.get().getType()),
                 () -> assertEquals(amountWithdrawn, transaction.get().getAmount())
         );
+    }
+
+    @DisplayName("Shouldn't find an account ")
+    @Test
+    @Order(7)
+    void notExistedAccountTest() {
+        Assertions.assertThrows(AccountNotFoundException.class,
+                () -> accountService.findAccountById(notExistedId));
     }
 
 }
