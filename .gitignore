@@ -1,0 +1,103 @@
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+
+# IDEA Ignores #
+################
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+local.properties
+
+# Generic Android ignores #
+###########################
+bin/
+target
+gen/
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
+
+# Logs #
+######################
+log/
+*.log
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# VCS #
+#######
+.svn
+.svn/
+CVS
+
+# XCode 4 #
+###########
+*.xcuserstate
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# OTHER #
+#########
+*/target/*
+*/log/*
+*/logs/*
+*/node_modules/*
+.settings*
+*/bin/*
+*/lib/*
+/target/
+target*
+src/main/java/META-INF/
+*/LOGS_PATH_IS_UNDEFINED/*
+/LOGS_PATH_IS_UNDEFINED/
+LOGS_PATH_IS_UNDEFINED/*
+*/ARCHIVES_LOGS_PATH_IS_UNDEFINED/*
+/ARCHIVES_LOGS_PATH_IS_UNDEFINED/
+ARCHIVES_LOGS_PATH_IS_UNDEFINED/*
+/.apt_generated/
+/.apt_generated_tests/
+HELP.md
+!.mvn/wrapper/maven-wrapper.jar
+Diagrams
+.dbeaver
+/src/test/resources/output/*
