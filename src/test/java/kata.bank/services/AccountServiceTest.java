@@ -2,9 +2,13 @@ package kata.bank.services;
 
 
 import kata.bank.domains.Account;
+import kata.bank.domains.Transaction;
+import kata.bank.enums.TransactionType;
 import kata.bank.repositories.TransactionRepository;
 import kata.bank.repositories.TransactionRepositoryImpl;
 import org.junit.jupiter.api.*;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,6 +20,8 @@ public class AccountServiceTest {
     private AccountService accountService;
     private TransactionRepository transactionRepository;
     private Long accountId = 1L;
+    private double depositAmount = 1500;
+
 
 
 
@@ -42,6 +48,31 @@ public class AccountServiceTest {
         assertAll(
                 () -> assertEquals(accountId, account.getId()),
                 () -> assertEquals(0, account.getBalance())
+        );
+    }
+
+    @DisplayName("Should make a deposit")
+    @Test
+    @Order(3)
+    void makeDepositTest() {
+        accountService.deposit(accountId, depositAmount);
+        Account account = accountService.findAccountById(accountId);
+        assertEquals(depositAmount, account.getBalance());
+    }
+
+    @DisplayName("Should create a deposit transaction")
+    @Test
+    @Order(4)
+    void createDepositTransactionTest() {
+        Optional<Transaction> transaction = transactionRepository.getAllAccountTransactions(accountId)
+                .stream()
+                .filter(t -> t.getType() == TransactionType.DEPOSIT)
+                .findAny();
+
+        assertAll(
+                transaction::isPresent,
+                () -> assertEquals(TransactionType.DEPOSIT, transaction.get().getType()),
+                () -> assertEquals(depositAmount, transaction.get().getAmount())
         );
     }
 
