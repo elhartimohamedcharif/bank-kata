@@ -14,10 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Statement extends BaseClass {
+
+    private final static String HEADER = "Date | Amount | Transaction Type | Balancee";
+
     private Account account;
     private List<StatementLine> statementLines = new LinkedList<>();
 
-    public void print(){
+    public void print() {
+        System.out.println(HEADER);
         statementLines.forEach(StatementLine::print);
     }
 }

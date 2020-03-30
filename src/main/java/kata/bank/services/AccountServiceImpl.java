@@ -2,6 +2,7 @@ package kata.bank.services;
 
 
 import kata.bank.domains.Account;
+import kata.bank.domains.Statement;
 import kata.bank.domains.StatementLine;
 import kata.bank.domains.Transaction;
 import kata.bank.enums.TransactionType;
@@ -89,7 +90,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void printAccountStatement(Long accountId) {
-
-
+        Statement accountStatement = statementRepository.getAccountStatement(accountId);
+        accountStatement.print();
     }
 }
