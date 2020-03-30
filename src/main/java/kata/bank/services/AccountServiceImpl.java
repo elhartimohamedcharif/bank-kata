@@ -2,14 +2,26 @@ package kata.bank.services;
 
 
 import kata.bank.domains.Account;
+import kata.bank.repositories.AccountRepository;
+import kata.bank.repositories.AccountRepositoryImpl;
+import kata.bank.repositories.StatementRepositoryImpl;
+import kata.bank.repositories.TransactionRepositoryImpl;
 
 
 public class AccountServiceImpl implements AccountService {
 
+    private AccountRepository accountRepository;
+
+    public AccountServiceImpl() {
+        accountRepository = new AccountRepositoryImpl();
+    }
 
     @Override
     public Long createAccount(Long id) {
-        return null;
+        Account account = new Account();
+        account.setId(id);
+        accountRepository.createAccount(account);
+        return id;
     }
 
     @Override

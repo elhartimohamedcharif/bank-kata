@@ -1,10 +1,8 @@
-package services;
+package kata.bank.services;
 
 
 import kata.bank.repositories.TransactionRepository;
 import kata.bank.repositories.TransactionRepositoryImpl;
-import kata.bank.services.AccountService;
-import kata.bank.services.AccountServiceImpl;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

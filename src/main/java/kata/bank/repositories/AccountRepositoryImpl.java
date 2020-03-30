@@ -13,7 +13,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public void createAccount(Account account) {
-
+        accounts.put(account.getId(), account);
     }
 
     @Override
