@@ -5,6 +5,8 @@ import kata.bank.domains.Account;
 import kata.bank.domains.Transaction;
 import kata.bank.enums.TransactionType;
 import kata.bank.exceptions.AccountNotFoundException;
+import kata.bank.exceptions.BalanceNotSufficientException;
+import kata.bank.exceptions.NegativeAmountException;
 import kata.bank.repositories.TransactionRepository;
 import kata.bank.repositories.TransactionRepositoryImpl;
 import org.junit.jupiter.api.*;
@@ -24,6 +26,8 @@ public class AccountServiceTest {
     private double depositAmount = 1500;
     private double amountWithdrawn = 1000;
     private Long notExistedId = 2L;
+    private double amountHigherThanBalance = 1000;
+    private double negativeAmount = -1000;
 
 
 
@@ -109,6 +113,23 @@ public class AccountServiceTest {
     void notExistedAccountTest() {
         Assertions.assertThrows(AccountNotFoundException.class,
                 () -> accountService.findAccountById(notExistedId));
+    }
+
+    @DisplayName("Shouldn't make a withdraw because the balance is not sufficient")
+    @Test
+    @Order(8)
+    void withdrawnAmountHigherThanBalanceTest() {
+        Assertions.assertThrows(BalanceNotSufficientException.class,
+                () -> accountService.withdraw(accountId, amountHigherThanBalance));
+    }
+
+
+    @DisplayName("Shouldn't make a withdraw because the amount is negative")
+    @Test
+    @Order(9)
+    void negativeAmountTest() {
+        Assertions.assertThrows(NegativeAmountException.class,
+                () -> accountService.withdraw(accountId, negativeAmount));
     }
 
 }
